@@ -7,7 +7,7 @@ module.exports = (client, message) => {
     }
 
     if (message.content.startsWith('!flame')) {
-        return 
+        return flame(message)
     }
 
     if (message.content === 'ping') {

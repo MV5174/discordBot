@@ -15,14 +15,17 @@ module.exports = message => {
             "We don't speak to peasants with no Motes",
             "DON'T SPEAK TO YOUR MASSA LIKE THAT"
         ]
+
     const member = message.mentions.members.first()
 
-    const string = Math.floor(Math.random() * flame.length)
+    const string = Math.floor(Math.random() * (flame.length + 1))
 
     if (!member) {
-        return message.reply(`Who are you trying to kick? You must mention a user.`)
+        return message.reply(`Who are you trying to flame? You must mention a user.`)
     }
 
-    return member
-        .reply(flame[string])
+    return message.channel
+        .send(flame[string])
+        .then(() => message.reply(`${member.user.tag} was flamed.`))
+        .catch(error => message.reply(`Sorry, an error occured.`))
 }

@@ -1,6 +1,7 @@
 const kick = require('../commands/kicks')
 const flame = require("../commands/flame")
 const gif = require("../commands/gif")
+const play = require("../commands/play")
 
 module.exports = (client, message) => {
     if (message.content.startsWith('!kick')) {
@@ -13,6 +14,10 @@ module.exports = (client, message) => {
 
     if (message.content.startsWith('!gif')) {
         return gif(message)
+    }
+
+    if (message.content.startsWith('!play')) {
+        return play(message)
     }
 
     if (message.content === 'ping') {

@@ -13,7 +13,8 @@ module.exports = message => {
             "1v1 me bro",
             "If you don't shut the fuck up, im gonna show you the ROYGBIV",
             "We don't speak to peasants with no Motes",
-            "DON'T SPEAK TO YOUR MASSA LIKE THAT"
+            "DON'T SPEAK TO YOUR MASSA LIKE THAT",
+            "No u"
         ]
 
     const member = message.mentions.members.first()

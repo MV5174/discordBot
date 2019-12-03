@@ -1,7 +1,9 @@
 const kick = require('../commands/kicks')
 const flame = require("../commands/flame")
 const gif = require("../commands/gif")
-const play = require("../commands/play")
+const music = require("../commands/music/play")
+const skip = require("../commands/music/skip")
+
 
 module.exports = (client, message) => {
     if (message.content.startsWith('!kick')) {
@@ -16,9 +18,13 @@ module.exports = (client, message) => {
         return gif(message)
     }
 
-    if (message.content.startsWith('!play')) {
-        return play(message)
-    }
+    // if (message.content.startsWith('!play')) {
+    //     return music(message("!play"))
+    // }
+
+    // if (message.content.startsWith('!skip')) {
+    //     return music(message("!skip"))
+    //}
 
     if (message.content === 'ping') {
         message.reply('Pong!')

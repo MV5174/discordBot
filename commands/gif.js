@@ -3,8 +3,8 @@ module.exports = message => {
 
     giphy.search('gifs', { 'q': query })
         .then((response) => {
-            const resp = response.data.length
-            const respInd = Math.floor(Math.random() * (resp + 1))
+            // const resp = response.data.length
+            const respInd = Math.floor(Math.random() * (5 + 1))
             const finalResp = response.data[respInd]
             console.log(finalResp)
             message.channel.send({

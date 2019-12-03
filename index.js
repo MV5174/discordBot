@@ -2,6 +2,8 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const fs = require('fs')
 require('dotenv').config()
+var GphApiClient = require('giphy-js-sdk-core')
+giphy = GphApiClient(process.env.giphy_token)
 
 //reads the files and fires their eventHandlers
 fs.readdir('./events/', (err, files) => {

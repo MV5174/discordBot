@@ -10,5 +10,5 @@ module.exports = message => {
             })
         
     }
-    return getQuote().then(quote => msg.channel.send(quote))
+    return getQuote().then(quote => message.channel.send(quote))
 }

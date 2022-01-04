@@ -3,6 +3,7 @@ const flame = require("../commands/flame")
 const gif = require("../commands/gif")
 const music = require("../commands/music/play")
 const skip = require("../commands/music/skip")
+const quote = require('../commands/quote')
 
 
 module.exports = (client, message) => {
@@ -17,6 +18,11 @@ module.exports = (client, message) => {
     if (message.content.startsWith('!gif')) {
         return gif(message)
     }
+
+    if (message.content.startsWith('!quote')) {
+        return quote(message)
+    }
+
 
     // if (message.content.startsWith('!play')) {
     //     return music(message("!play"))

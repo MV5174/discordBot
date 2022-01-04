@@ -1,6 +1,6 @@
 
 module.exports = message => {
-    function getQuote() {
+    function getQuote() { //comment 
         return fetch("https://zenquotes.io/api/random")
             .then(res => {
                 return res.json()

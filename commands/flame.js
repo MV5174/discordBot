@@ -19,17 +19,17 @@ module.exports = message => {
 
     //const member = message.mentions.members.first()
     const member;
-    function getUserFromMention(message) {
-        if (!message) return;
+    function getUserFromMention(mention) {
+        if (!mention) return;
     
-        if (message.startsWith('<@') && message.endsWith('>')) {
-            message = message.slice(2, -1);
+        if (mention.startsWith('<@') && mention.endsWith('>')) {
+            mention = mention.slice(2, -1);
     
-            if (message.startsWith('!')) {
-                message = message.slice(1);
+            if (mention.startsWith('!')) {
+                mention = mention.slice(1);
             }
     
-            return member = client.users.cache.get(message);
+            return member = client.users.cache.get(mention);
         }
     }
     getUserFromMention(message);

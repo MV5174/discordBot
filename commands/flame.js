@@ -17,7 +17,22 @@ module.exports = message => {
             "No u"
         ]
 
-    const member = message.mentions.members.first()
+    //const member = message.mentions.members.first()
+    const member;
+    function getUserFromMention(message) {
+        if (!message) return;
+    
+        if (message.startsWith('<@') && message.endsWith('>')) {
+            message = message.slice(2, -1);
+    
+            if (message.startsWith('!')) {
+                message = message.slice(1);
+            }
+    
+            return member = client.users.cache.get(message);
+        }
+    }
+    getUserFromMention(message);
 
     const string = Math.floor(Math.random() * (flame.length + 1))
 

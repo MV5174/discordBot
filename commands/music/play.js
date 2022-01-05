@@ -10,7 +10,7 @@
 //         const query = message.content.split("!play")[1]
 
 //         const voiceChannel = message.member.voiceChannelID;
-        
+
 
 //         if (!voiceChannel) return message.channel.send('You need to be in a channel to use this!');
 
@@ -85,3 +85,51 @@
 //         })
 //     await songQueue.textChannel.send(`Now playing **${song.title}**`)
 // }
+
+const lib = require('lib')({ token: process.env.STDLIB_SECRET_TOKEN });
+const ytdl = require('ytdl-core');
+const ytSearch = require('yt-search');
+
+module.exports = async message => {
+    let voiceChannel = message.member.voiceChannelID; // Set this to the voice channel of your choice.
+    let searchString = message.content.split(' ').slice(1).join(' ');
+    console.log(message.guild.id)
+
+    try {
+        let youtubeLink;
+        if (!searchString) {
+            return lib.discord.channels['@0.2.0'].messages.create({
+                channel_id: `${message.channel}`,
+                content: `No search string provided!`,
+            });
+        }
+        if (!searchString.includes('youtube.com')) {
+            let results = await ytSearch(searchString);
+            if (!results?.all?.length) {
+                return lib.discord.channels['@0.2.0'].messages.create({
+                    channel_id: `${message.channel}`,
+                    content: `No results found for your search string. Please try a different one.`,
+                });
+            }
+            youtubeLink = results.all[0].url;
+        } else {
+            youtubeLink = searchString;
+        }
+        console.log(ytdl.getInfo(youtubeLink));
+        let downloadInfo = await ytdl.getInfo(youtubeLink);
+        await lib.discord.voice['@0.0.1'].tracks.play({
+            channel_id: `${voiceChannel}`,
+            guild_id: `${message.guild.id}`,
+            download_info: downloadInfo
+        });
+        return lib.discord.channels['@0.2.0'].messages.create({
+            channel_id: `${message.channel}`,
+            content: `Now playing **${downloadInfo.videoDetails.title}**`,
+        });
+    } catch (e) {
+        return lib.discord.channels['@0.2.0'].messages.create({
+            channel_id: `${message.channel}`,
+            content: `Failed to play track!`,
+        });
+    }
+}

@@ -7,6 +7,8 @@ const quote = require('../commands/quote')
 
 
 module.exports = (client, message) => {
+    if (message.author.bot) return;
+
     if (message.content.startsWith('!kick')) {
         return kick(message)
     }
@@ -23,9 +25,8 @@ module.exports = (client, message) => {
         return quote(message)
     }
 
-
     // if (message.content.startsWith('!play')) {
-    //     return music(message("!play"))
+    //     return music(message)
     // }
 
     // if (message.content.startsWith('!skip')) {

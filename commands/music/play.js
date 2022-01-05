@@ -1,61 +1,87 @@
-const ytdl = require('ytdl-core');
-const ffmpeg = require('ffmpeg');
-const streamOptions = {
-    seek: 0,
-    volume: 1
-};
-let queue = [];
+// const ytdl = require('ytdl-core');
+// const ytSearch = require('yt-search');
+// const ffmpeg = require('ffmpeg');
 
-module.exports = async function message(fun) {
-    let args = message.content.split(" ");
-    let url = args[1];
-    let voiceChannel = message.member.voiceChannel
+// const { joinVoiceChannel } = require('@discordjs/voice');
 
-    if (fun === "!play") {
+// const queue = new Map();
 
-        if (ytdl.validateURL(url)) {
-            console.log("valid url")
-            const flag = queue.some(element => element === url);
-            if (!flag) {
-                queue.push(url);
-                if (voiceChannel != null) {
+// module.exports = async message => {
+//         const query = message.content.split("!play")[1]
 
-                    if (voiceChannel.connection) {
-                        message.channel.send("Song has been added!")
-                    }
-
-                    else {
-                        try {
-                            const voiceConnection = await voiceChannel.join();
-
-                            await playSong(message.channel, voiceChannel, voiceConnection)
-                        }
-                        catch (error) {
-                            console.log(error)
-                        }
-                    }
-                }
-            }
-        }
-        async function playSong(messageChannel, voiceChannel, voiceConnection) {
-            const stream = ytdl(queue[0], { filter: 'audioonly' });
-            const dispatcher = voiceConnection.playStream(stream, streamOptions);
-
-            dispatcher.on('end', () => {
-                queue.shift();
-
-                if (queue.length == 0) {
-                    voiceChannel.leave()
-                }
-                else {
-                    setTimeout(() => {
-                        playSong(messageChannel, voiceChannel, voiceConnection)
-                    }, 5000)
-                }
-            })
-        }
-    }
-    else if (fun === "Skip"){
+//         const voiceChannel = message.member.voiceChannelID;
         
-    }
-}
+
+//         if (!voiceChannel) return message.channel.send('You need to be in a channel to use this!');
+
+//         //const permissions = voiceChannel.permissionsFor(message.client.user);
+//         //if (!permissions.has('CONNECT')) return message.channel.send("You don't have proper permissions");
+//         //if (!permissions.has('SPEAK')) return message.channel.send("You don't have proper permissions");
+
+//         const serverQueue = queue.get(message.guild.id);
+
+//         let song = {};
+
+//         if (ytdl.validateURL(query)) {
+//             const songInfo = await ytdl.getInfo(query)
+//             song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+//         } else {
+//             const videoFinder = async (query) => {
+//                 const videoResult = await ytSearch(query);
+//                 return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
+//             }
+
+//             const video = await videoFinder(query)
+//             if (video) {
+//                 song = { title: video.title, url: video.url }
+//             } else {
+//                 message.channel.send('Error finding video');
+//             }
+//         }
+//         if (!serverQueue) {
+//             const queueConstructor = {
+//                 voiceChannel: voiceChannel,
+//                 textChannel: message.channel,
+//                 connection: null,
+//                 songs: []
+//             }
+
+//             queue.set(message.guild.is, queueConstructor);
+//             queueConstructor.songs.push(song);
+
+//             try {
+//                 const connection = await joinVoiceChannel({
+//                     channelId: message.channel.id,
+//                     guildId: message.channel.guild.id,
+//                 });
+//                 queueConstructor.connection = connection;
+//                 videoPlayer(message.guild, queueConstructor.songs[0])
+//             } catch (err) {
+//                 queue.delete(message.guild.id);
+//                 message.channel.send('There was an error connecting');
+//                 throw err
+//             }
+//         } else {
+//             serverQueue.songs.push(song)
+//             return message.channel.send('Song has been added to queue');
+//         }
+//     }
+
+
+// const videoPlayer = async (guild, song) => {
+//     const songQueue = queue.get(guild.id);
+
+//     if (!song) {
+//         songQueue.voiceChannel.leave()
+//         queue.delete(guild.id);
+//         return;
+//     }
+
+//     const stream = ytdl(song.url, { filter: 'audioonly' });
+//     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
+//         .on('finish', () => {
+//             songQueue.songs.shift();
+//             videoPlayer(guild, songQueue.songs[0]);
+//         })
+//     await songQueue.textChannel.send(`Now playing **${song.title}**`)
+// }

@@ -17,22 +17,7 @@ module.exports = message => {
             "No u"
         ]
 
-    //const member = message.mentions.members.first()
-    const member;
-    function getUserFromMention(mention) {
-        if (!mention) return;
-    
-        if (mention.startsWith('<@') && mention.endsWith('>')) {
-            mention = mention.slice(2, -1);
-    
-            if (mention.startsWith('!')) {
-                mention = mention.slice(1);
-            }
-    
-            return member = client.users.cache.get(mention);
-        }
-    }
-    getUserFromMention(message);
+    const member = message.mentions.users.first();
 
     const string = Math.floor(Math.random() * (flame.length + 1))
 
@@ -42,6 +27,6 @@ module.exports = message => {
 
     return message.channel
         .send(flame[string])
-        .then(() => message.reply(`${member.user.tag} was flamed.`))
+        .then(() => message.reply(`${member} was flamed.`))
         .catch(error => message.reply(`Sorry, an error occured.`))
 }

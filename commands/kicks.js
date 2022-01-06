@@ -12,7 +12,7 @@ module.exports = message => {
     if (message.member.hasPermission(['KICK_MEMBERS', 'BAN_MEMBERS'])) {
       return member
       .kick()
-      .then(() => message.reply(`${member.user.tag} was kicked.`))
+      .then(() => message.reply(`${member} was kicked.`))
       .catch(error => message.reply(`Sorry, an error occured.`))
     }
     else {

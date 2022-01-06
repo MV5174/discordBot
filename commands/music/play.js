@@ -91,8 +91,10 @@ const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
 module.exports = async message => {
-    let voiceChannel = message.member.voiceChannelID; // Set this to the voice channel of your choice.
-    let searchString = message.content.split(' ').slice(1).join(' ');
+    let voiceChannel;
+    voiceChannel = message.member.voiceChannelID; // Set this to the voice channel of your choice.
+    let searchString;
+    searchString = message.content.split(' ').slice(1).join(' ');
     console.log(message.guild.id)
 
     try {

@@ -119,9 +119,9 @@ module.exports = async message => {
             console.log('searching youtube with url . . .')
             youtubeLink = searchString;
         }
-        console.log(ytdl.getInfo(youtubeLink));
         console.log('downloading youtube file. . .')
-        let downloadInfo = await ytdl.getInfo(youtubeLink);
+        let downloadInfo;
+        downloadInfo = await ytdl.getInfo(youtubeLink);
         await lib.discord.voice['@0.0.1'].tracks.play({
             channel_id: `${voiceChannel}`,
             guild_id: `${message.guild.id}`,

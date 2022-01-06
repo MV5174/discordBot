@@ -95,7 +95,6 @@ module.exports = async message => {
     voiceChannel = message.member.voiceChannelID; // Set this to the voice channel of your choice.
     let searchString;
     searchString = message.content.split(' ').slice(1).join(' ');
-    console.log(message.guild.id)
 
     try {
         let youtubeLink;
@@ -106,6 +105,7 @@ module.exports = async message => {
             });
         }
         if (!searchString.includes('youtube.com')) {
+            console.log('searching youtube with query . . .')
             let results = await ytSearch(searchString);
             if (!results?.all?.length) {
                 return lib.discord.channels['@0.2.0'].messages.create({
@@ -113,11 +113,14 @@ module.exports = async message => {
                     content: `No results found for your search string. Please try a different one.`,
                 });
             }
+            
             youtubeLink = results.all[0].url;
         } else {
+            console.log('searching youtube with url . . .')
             youtubeLink = searchString;
         }
         console.log(ytdl.getInfo(youtubeLink));
+        console.log('downloading youtube file. . .')
         let downloadInfo = await ytdl.getInfo(youtubeLink);
         await lib.discord.voice['@0.0.1'].tracks.play({
             channel_id: `${voiceChannel}`,

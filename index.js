@@ -1,11 +1,21 @@
-const Discord = require('discord.js')
-const client = new Discord.Client()
+// Require the necessary discord.js classes
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+//const { token } = require('./config.json');
 
 const fs = require('fs')
 require('dotenv').config()
 
 var GphApiClient = require('giphy-js-sdk-core')
 giphy = GphApiClient(process.env.giphy_token)
+
+// Create a new client instance
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+// When the client is ready, run this code (only once)
+// We use 'c' for the event parameter to keep it separate from the already defined 'client'
+client.once(Events.ClientReady, c => {
+	console.log(`Ready! Logged in as ${c.user.tag}`);
+});
 
 //reads the files and fires their eventHandlers
 fs.readdir('./events/', (err, files) => {
@@ -16,5 +26,5 @@ fs.readdir('./events/', (err, files) => {
     })
 })
 
-
-client.login(process.env.BOT_TOKEN)
+// Log in to Discord with your client's token
+client.login(process.env.BOT_TOKEN);

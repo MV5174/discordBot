@@ -21,7 +21,7 @@
   "homepage": "https://github.com/MV5174/discordBot#readme",
   "dependencies": {
     "@discordjs/voice": "^0.7.5",
-    "discord.js": "^11.5.1",
+    "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
     "ffmpeg": "0.0.4",
     "giphy-js-sdk-core": "^1.0.6",

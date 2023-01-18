@@ -1,5 +1,8 @@
 // Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ModalSubmitFields } = require('discord.js');
+const { DisTube } = require('distube');
+const { SoundCloudPlugin } = require('@distube/soundcloud');
+const { SpotifyPlugin } = require('@distube/spotify');
 //const { token } = require('./config.json');
 
 const fs = require('node:fs');
@@ -10,7 +13,13 @@ var GphApiClient = require('giphy-js-sdk-core')
 giphy = GphApiClient(process.env.giphy_token)
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: 
+	[
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.GuildMessages
+	] 
+});
 
 client.commands = new Collection();
 const eventsPath = path.join(__dirname, 'events');

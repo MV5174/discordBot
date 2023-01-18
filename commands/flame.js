@@ -51,7 +51,7 @@ module.exports = {
     data: new SlashCommandBuilder()
     .setName('flame')
     .setDescription('Select a member and flame them.')
-    .addStringOption(option =>
+    .addUserOption(option =>
         option
             .setName('target')
             .setDescription('The member to flame')
@@ -63,7 +63,7 @@ module.exports = {
         console.log(target.username);
         console.log(interaction.toJSON());
 
-        await interaction.reply(`<@${target.username}> ` + flame[string]);
+        await interaction.reply(`${target.username} ` + flame[string]);
         await wait(2000);
         await interaction.followUp(`${target.username} has been flamed`);
     },

@@ -49,21 +49,22 @@ const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('flame')
-        .setDescription('Flames the provided User')
-        .addUserOption(option =>
-            option
-                .setName('target')
-                .setDescription('The member to flame')
+    .setName('flame')
+    .setDescription('Select a member and flame them.')
+    .addStringOption(option =>
+        option
+            .setName('target')
+            .setDescription('The member to flame')
+            .setRequired(true)
         ),
     async execute(interaction) {
-        const user = interaction.options.getUser('target');
+        const target = interaction.options.getUser('target');
         const string = Math.floor(Math.random() * (flame.length + 1));
-        console.log(user);
+        console.log(target.username);
         console.log(interaction.toJSON());
 
-        await interaction.reply(`<@${user}> ` + flame[string]);
+        await interaction.reply(`<@${target.username}> ` + flame[string]);
         await wait(2000);
-        await interaction.followUp(`${user} has been flamed`);
+        await interaction.followUp(`${target.username} has been flamed`);
     },
 };

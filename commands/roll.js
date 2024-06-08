@@ -4,7 +4,7 @@ const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('flame')
+    .setName('roll')
     .setDescription('Rolls a d6, d8, d10, d12, d20, or a d100')
     .addStringOption(option =>
         option
@@ -14,11 +14,12 @@ module.exports = {
         ),
     async execute(interaction) {
         const dice = interaction.options.getString('dice');
-        const slicedDice = dice.slice(1,2)
-        const diceRoll = Math.floor(Math.random() * (slicedDice + 1));
+        const slicedDice = dice.slice(1,4);
+        console.log(slicedDice);
+        const diceRoll = Math.floor(Math.random() * (slicedDice - 1 + 1) + 1);
         console.log(interaction.toJSON());
 
-        await interaction.reply(`rolling`);
+        await interaction.reply(`Rolling ${dice}...`);
         await wait(2000);
         await interaction.followUp(`${diceRoll}!`);
     },

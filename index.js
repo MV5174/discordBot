@@ -1,3 +1,5 @@
+// Require Sequelize
+const Sequelize = require('sequelize');
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits, ModalSubmitFields } = require('discord.js');
 const { DisTube } = require('distube');
@@ -19,6 +21,14 @@ const client = new Client({ intents:
 		GatewayIntentBits.GuildVoiceStates,
 		GatewayIntentBits.GuildMessages
 	] 
+});
+
+const sequelize = new Sequelize('database', 'user', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	// SQLite only
+	storage: 'database.sqlite',
 });
 
 client.commands = new Collection();

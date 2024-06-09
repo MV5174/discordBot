@@ -13,7 +13,7 @@ const newGameModalCreate = () => {
     // Create the modal
     const newGameModal = new ModalBuilder()
         .setCustomId('newGameModal')
-        .setTitle('New Game Modal');
+        .setTitle('Character Creation');
 
     // Create the text input components
     const name = new TextInputBuilder()
@@ -26,20 +26,36 @@ const newGameModalCreate = () => {
         .setValue('Bob')
         .setRequired(true);
 
-    // const characterClass = new ButtonBuilder()
-    //     .setCustomId('characterClass')
-    //     .setLabel('New Game')
-    //     .setStyle(ButtonStyle.Secondary);
-
     // An action row only holds one text input,
     // so you need one action row per text input.
     const firstActionRow = new ActionRowBuilder().addComponents(name);
-    //const secondActionRow = new ActionRowBuilder().addComponents(characterClass);
 
     //TODO: Add data to character obj
 
     // Add inputs to the modal
     return newGameModal.addComponents(firstActionRow);
+}
+
+const classSelect = () => {
+    const rogueClass = new ButtonBuilder()
+        .setCustomId('rogueClass')
+        .setLabel('Rogue')
+        .setStyle(ButtonStyle.Secondary);
+
+    const fighterClass = new ButtonBuilder()
+        .setCustomId('fighterClass')
+        .setLabel('Fighter')
+        .setStyle(ButtonStyle.Secondary);
+
+    const mageClass = new ButtonBuilder()
+        .setCustomId('mageClass')
+        .setLabel('Mage')
+        .setStyle(ButtonStyle.Secondary);
+
+    const row = new ActionRowBuilder().addComponents(rogueClass, fighterClass, mageClass);
+
+    return row
+
 }
 
 module.exports = {
@@ -65,20 +81,29 @@ module.exports = {
         });
 
         const collectorFilter = i => {
-            i.deferUpdate();
+            // i.deferUpdate();
             return i.user.id === interaction.user.id;
         };
 
         try {
             const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 })
-                .then()
 
-            
-        }
+            if (confirmation.customId === 'newGame') {
+                await confirmation.showModal(newGameModalCreate());
+                //await confirmation.update('Please type in /class to pick your class');
+            }
 
-        catch (e) {
+        } catch (e) {
             await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
         }
+
+        client.on(Events.InteractionCreate, async interaction => {
+            if (!interaction.isModalSubmit()) return;
+            if (interaction.customId === 'newGameModal') {
+                await interaction.reply({ content: 'Your submission was received successfully!' });
+            }
+        });
+
     }
 
 }

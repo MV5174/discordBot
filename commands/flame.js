@@ -33,15 +33,11 @@ const { SlashCommandBuilder } = require('discord.js');
 // }
 const flame =
     [
-        "Ok, boomer",
         "Stop chainfeeding please",
         "Who are you again?",
-        "You're going to get sent to the shadow realm if you don't stop",
+        "You're going to get sent to the shadow realm",
         "Dude, nobody cares",
-        "1v1 me bro",
-        "If you don't shut the fuck up, im gonna show you the ROYGBIV",
-        "We don't speak to peasants with no Motes",
-        "No u"
+        "We don't speak to peasants with no Motes"
     ];
 
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');

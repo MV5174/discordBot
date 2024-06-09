@@ -50,5 +50,7 @@ for (const file of commandFiles) {
 	}
 }
 
+client.cooldowns = new Collection();
+
 // Log in to Discord with your client's token
 client.login(process.env.BOT_TOKEN);

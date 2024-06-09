@@ -3,6 +3,7 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
+    cooldown: 5,
     data: new SlashCommandBuilder()
     .setName('roll')
     .setDescription('Rolls a d6, d8, d10, d12, d20, or a d100')

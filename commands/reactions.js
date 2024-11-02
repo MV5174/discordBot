@@ -57,7 +57,7 @@ module.exports = {
                 console.log(role);
                 console.log(member);
                 await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.globalName}`, components: [] });
+                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
             }
             if (confirmation.customId === 'dndRole') {
                 const guild = interaction.guild
@@ -66,7 +66,7 @@ module.exports = {
                 console.log(role);
                 console.log(member);
                 await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.globalName}`, components: [] });
+                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
             }
             if (confirmation.customId === 'whRole') {
                 const guild = interaction.guild
@@ -75,7 +75,7 @@ module.exports = {
                 console.log(role);
                 console.log(member);
                 await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.globalName}`, components: [] });
+                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
             }
             if (confirmation.customId === 'leagueRole') {
                 const guild = interaction.guild
@@ -84,7 +84,7 @@ module.exports = {
                 console.log(role);
                 console.log(member);
                 await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.globalName}`, components: [] });
+                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
             }
         } catch (e) {
             await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });

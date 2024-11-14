@@ -49,43 +49,37 @@ module.exports = {
 
         try {
             const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 })
+            let serverRole;
+            const guild = interaction.guild
+            const member = interaction?.member
 
-            if (confirmation.customId === 'mtgRole') {
-                const guild = interaction.guild
-                const role = guild.roles.cache.find(role => role.name === 'MTG');
-                const member = interaction?.member
+            function confirmRole() {
                 console.log(role);
                 console.log(member);
-                await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
+                member.roles.add(role);
+                confirmation.update({ content: `The ${role.name} role has been given to ${member.user.globalName}`, components: [] });
             }
-            if (confirmation.customId === 'dndRole') {
-                const guild = interaction.guild
-                const role = guild.roles.cache.find(role => role.name === 'DnD');
-                const member = interaction?.member
-                console.log(role);
-                console.log(member);
-                await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
+
+            switch (confirmation.customId) {
+                case 'mtgRole':
+                    serverRole = 'MTG';
+                    break;
+                case 'dndRole':
+                    serverRole = 'DnD';
+                    break;
+                case 'whRole':
+                    serverRole = 'Warhammer';
+                    break;
+                case 'leagueRole':
+                    serverRole = 'League';
+                    break;
+                default:
+                    serverRole = ''
+                    break;
             }
-            if (confirmation.customId === 'whRole') {
-                const guild = interaction.guild
-                const role = guild.roles.cache.find(role => role.name === 'Warhammer');
-                const member = interaction?.member
-                console.log(role);
-                console.log(member);
-                await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
-            }
-            if (confirmation.customId === 'leagueRole') {
-                const guild = interaction.guild
-                const role = guild.roles.cache.find(role => role.name === 'League');
-                const member = interaction?.member
-                console.log(role);
-                console.log(member);
-                await member.roles.add(role);
-                await confirmation.update({ content: `The ${role.name} role has been given to ${member.user.nickname}`, components: [] });
-            }
+
+            const role = guild.roles.cache.find(role => role.name === 'MTG');
+            confirmRole(role, member)
         } catch (e) {
             await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
         }

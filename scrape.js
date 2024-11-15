@@ -2,17 +2,20 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const inquirer = require('@inquirer/prompts');
 
-const baseRepo = `https://github.com/BSData/wh40k-10e?tab=readme-ov-file`;
+const baseRepo = `https://39k.pro/`;
 let armyRepo = `https://github.com/BSData/wh40k-10e/blob/main/`;
 
 async function scrapeSite(url, element, keyword) {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
+    const scriptContent = $('script[src="/assets/index-ff7110e2.js"]').text();
+    console.log(scriptContent)
     if (element) {
         let elements = [];
         $(`${element}`).each((_idx, el) => {
-            const element = $(el).text();
-            if (element.includes('.cat') && !elements.includes(element)) {
+            const element = $(el).html();
+            console.log(element)
+            if (!elements.includes(element)) {
                 elements.push(element);
             }
         });
@@ -37,15 +40,15 @@ async function inquire(result) {
     return answer;
 }
 
-scrapeSite(baseRepo, 'a').then(result => {
+scrapeSite(baseRepo, 'script').then(result => {
     console.log(result)
-    inquire(result).then(answer => {
-        console.log(answer);
-        const armyUrl = answer.replaceAll(' ', '%20');
-        armyRepo += armyUrl;
-        console.log(armyRepo);
-        scrapeSite(armyRepo, 'div', 'blob').then(result2 => {
-            console.log(result2)
-        })
-    })
+    //inquire(result).then(answer => {
+        //console.log(answer);
+        // const armyUrl = answer.replaceAll(' ', '%20');
+        // armyRepo += armyUrl;
+        // console.log(armyRepo);
+        // scrapeSite(armyRepo, 'div', 'blob').then(result2 => {
+        //     console.log(result2)
+        // })
+    //})
 }).catch(err => console.log(err));
